@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="../public/libs/boostrap/bootstrap.min.css" />
   </head>
   <body>
     <div class="wrapper fadeInDown">
@@ -20,8 +18,8 @@
 
         <!-- Login Form -->
         <form>
-          <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-          <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+          <input type="text" id="login" class="fadeIn second" name="login" placeholder="login" value="shalithax@gmail.com">
+          <input type="password" id="password" class="fadeIn third" name="login" placeholder="password" value="Shalitha@2018">
           <input type="button" class="fadeIn fourth" value="Log In" onclick="submitForm()">
         </form>
 
@@ -32,16 +30,35 @@
 
         <script>
           function submitForm() {
+
+            if($('#login').val().length == 0 || $('#password').val() == 0){
+              alert("Please enter username and password");
+              return;
+            }
+
             const credentials = {
               "userName": $('#login').val(),
               "password": $('#password').val()
             }
             const { ipcRenderer } = require('electron');
-            ipcRenderer.sendSync('product:add', credentials);
+            ipcRenderer.send('payload:auth', credentials);
+
           }
         </script>
 
       </div>
     </div>
   </body>
+
+  <!-- Insert this line above script imports  -->
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+  <!-- normal script imports etc  -->
+  <script src="../public/script/jquery.min.js"></script>
+  <script src="../public/script/popper.min.js"></script>
+  <script src="../public/libs/boostrap/bootstrap.min.js"></script>
+
+  <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+
 </html>
